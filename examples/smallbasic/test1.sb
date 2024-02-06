@@ -1,0 +1,9 @@
+TextWindow.WriteLine("Hello World")
+x = 123 + 456
+For i = 1 To x Step 2 
+  x = x + 1
+EndFor 
+
+If x <= 789 Then
+
+EndIf
