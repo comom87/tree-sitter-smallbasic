@@ -1,6 +1,321 @@
 [
   {
-    "type": "program",
+    "type": "AdditiveExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "AdditiveExpr",
+          "named": true
+        },
+        {
+          "type": "MultiplicativeExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "AndExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "AndExpr",
+          "named": true
+        },
+        {
+          "type": "EqNeqExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CRStmtCRs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "TheRest",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CompExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "AdditiveExpr",
+          "named": true
+        },
+        {
+          "type": "CompExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "CondExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "OrExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "EqNeqExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "CompExpr",
+          "named": true
+        },
+        {
+          "type": "EqNeqExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "Expr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "CondExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "ExprStatement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "Expr",
+          "named": true
+        },
+        {
+          "type": "Exprs",
+          "named": true
+        },
+        {
+          "type": "ID",
+          "named": true
+        },
+        {
+          "type": "Idxs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "Exprs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "MoreThanOneExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "Idxs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "Expr",
+          "named": true
+        },
+        {
+          "type": "Idxs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "MoreThanOneExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "Expr",
+          "named": true
+        },
+        {
+          "type": "MoreThanOneExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "MoreThanOneStmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "MoreThanOneStmt",
+          "named": true
+        },
+        {
+          "type": "Stmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "MoreThanZeroElseIf",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "CRStmtCRs",
+          "named": true
+        },
+        {
+          "type": "Expr",
+          "named": true
+        },
+        {
+          "type": "MoreThanZeroElseIf",
+          "named": true
+        },
+        {
+          "type": "OptionalElse",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "MultiplicativeExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "MultiplicativeExpr",
+          "named": true
+        },
+        {
+          "type": "UnaryExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "OptStep",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "Expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "OptionalElse",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "CRStmtCRs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "OrExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "AndExpr",
+          "named": true
+        },
+        {
+          "type": "OrExpr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "Primary",
     "named": true,
     "fields": {},
     "children": {
@@ -8,26 +323,189 @@
       "required": false,
       "types": [
         {
-          "type": "comment",
+          "type": "Expr",
           "named": true
         },
         {
-          "type": "junk",
+          "type": "Exprs",
+          "named": true
+        },
+        {
+          "type": "ID",
+          "named": true
+        },
+        {
+          "type": "Idxs",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "@",
+    "type": "Prog",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "MoreThanOneStmt",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "Start",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "Prog",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "Stmt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "CRStmtCRs",
+          "named": true
+        },
+        {
+          "type": "Expr",
+          "named": true
+        },
+        {
+          "type": "ExprStatement",
+          "named": true
+        },
+        {
+          "type": "ID",
+          "named": true
+        },
+        {
+          "type": "MoreThanZeroElseIf",
+          "named": true
+        },
+        {
+          "type": "OptStep",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "TheRest",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "Stmt",
+          "named": true
+        },
+        {
+          "type": "TheRest",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "UnaryExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "Primary",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "(",
     "named": false
   },
   {
-    "type": "comment",
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": "+",
+    "named": false
+  },
+  {
+    "type": "-",
+    "named": false
+  },
+  {
+    "type": ".",
+    "named": false
+  },
+  {
+    "type": "/",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "<=",
+    "named": false
+  },
+  {
+    "type": "<>",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": ">=",
+    "named": false
+  },
+  {
+    "type": "ID",
     "named": true
   },
   {
-    "type": "junk",
-    "named": true
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
   }
 ]

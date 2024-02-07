@@ -107,6 +107,38 @@ module.exports = grammar({
         $.AdditiveExpr,
       ),
 
+      AdditiveExpr: $ => choice(
+        seq($.AdditiveExpr, "+", $.MultiplicativeExpr),
+        seq($.AdditiveExpr, "-", $.MultiplicativeExpr),
+        $.MultiplicativeExpr
+      ),
+
+      MultiplicativeExpr: $ => choice(
+        seq($.MultiplicativeExpr, "*", $.UnaryExpr),
+        seq($.MultiplicativeExpr, "/", $.UnaryExpr),
+        $.UnaryExpr
+      ),
+
+      UnaryExpr: $ => choice(
+        seq("-", $.Primary),
+        $.Primary
+      ),
+
+      Primary: $ => choice(
+        /([0-9]*[.])?[0-9]+/,
+        /\"[^\"]*\"/,
+        seq("(", $.Expr, ")"),
+        $.ID,
+        seq($.ID, ".", $.ID),
+        seq($.ID, ".", $.ID, "(", $.Exprs, ")"),
+        seq($.ID, $.Idxs)
+      ),
+
+      Idxs: $ => choice(
+        seq("[", $.Expr, "]"),
+        seq("[", $.Expr, "]", $.Idxs)
+      ),
+
       // Terminals
       ID: _ => /[_a-zA-Z][_a-zA-Z0-9]*/
 
