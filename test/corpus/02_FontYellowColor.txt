@@ -1,12 +1,30 @@
 ===
-01_HelloWorld
+02_FontYellowColor
 ===
 
+TextWindow.ForegroundColor = "Yellow" 
 TextWindow.WriteLine("Hello World")
 
 ---
 
 (Start
+      (Prog
+        (MoreThanOneStmt
+          (Stmt
+            (ExprStatement
+              (ID)
+              (ID)
+              (Expr
+                (CondExpr
+                  (OrExpr
+                    (AndExpr
+                      (EqNeqExpr
+                        (CompExpr
+                          (AdditiveExpr
+                            (MultiplicativeExpr
+                              (UnaryExpr
+                                (Primary
+                                  (STR)))))))))))))))
       (Prog
         (MoreThanOneStmt
           (Stmt

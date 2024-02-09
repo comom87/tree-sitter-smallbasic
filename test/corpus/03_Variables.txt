@@ -1,0 +1,11 @@
+===
+03_Variables
+===
+
+TextWindow.Write("Enter your Name: ") 
+name = TextWindow.Read() 
+TextWindow.WriteLine("Hello " + name) 
+
+---
+
+(source_file)
