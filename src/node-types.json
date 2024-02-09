@@ -23,9 +23,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "AndExpr",
+          "named": true
+        },
         {
           "type": "EqNeqExpr",
           "named": true
@@ -34,22 +38,13 @@
     }
   },
   {
-    "type": "CR",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "CRStmtCRs",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "CR",
-          "named": true
-        },
         {
           "type": "TheRest",
           "named": true
@@ -62,11 +57,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "AdditiveExpr",
+          "named": true
+        },
+        {
+          "type": "CompExpr",
           "named": true
         }
       ]
@@ -96,11 +95,11 @@
       "required": true,
       "types": [
         {
-          "type": "AdditiveExpr",
+          "type": "CompExpr",
           "named": true
         },
         {
-          "type": "CompExpr",
+          "type": "EqNeqExpr",
           "named": true
         }
       ]
@@ -140,6 +139,10 @@
         {
           "type": "ID",
           "named": true
+        },
+        {
+          "type": "Idxs",
+          "named": true
         }
       ]
     }
@@ -160,15 +163,38 @@
     }
   },
   {
-    "type": "MoreThanOneExpr",
+    "type": "Idxs",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "Expr",
+          "named": true
+        },
+        {
+          "type": "Idxs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "MoreThanOneExpr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "Expr",
+          "named": true
+        },
+        {
+          "type": "MoreThanOneExpr",
           "named": true
         }
       ]
@@ -179,9 +205,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "MoreThanOneStmt",
+          "named": true
+        },
         {
           "type": "Stmt",
           "named": true
@@ -194,9 +224,21 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "CRStmtCRs",
+          "named": true
+        },
+        {
+          "type": "Expr",
+          "named": true
+        },
+        {
+          "type": "MoreThanZeroElseIf",
+          "named": true
+        },
         {
           "type": "OptionalElse",
           "named": true
@@ -224,7 +266,7 @@
     }
   },
   {
-    "type": "OptionalElse",
+    "type": "OptStep",
     "named": true,
     "fields": {},
     "children": {
@@ -232,7 +274,22 @@
       "required": true,
       "types": [
         {
-          "type": "EndIf",
+          "type": "Expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "OptionalElse",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "CRStmtCRs",
           "named": true
         }
       ]
@@ -243,11 +300,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "AndExpr",
+          "named": true
+        },
+        {
+          "type": "OrExpr",
           "named": true
         }
       ]
@@ -259,7 +320,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "Expr",
@@ -274,11 +335,7 @@
           "named": true
         },
         {
-          "type": "NUM",
-          "named": true
-        },
-        {
-          "type": "STR",
+          "type": "Idxs",
           "named": true
         }
       ]
@@ -289,26 +346,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "MoreThanOneStmt",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "Start",
-    "named": true,
-    "fields": {},
-    "children": {
       "multiple": true,
       "required": false,
       "types": [
         {
-          "type": "Prog",
+          "type": "MoreThanOneStmt",
           "named": true
         }
       ]
@@ -335,7 +377,15 @@
           "named": true
         },
         {
+          "type": "ID",
+          "named": true
+        },
+        {
           "type": "MoreThanZeroElseIf",
+          "named": true
+        },
+        {
+          "type": "OptStep",
           "named": true
         }
       ]
@@ -349,10 +399,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "CR",
-          "named": true
-        },
         {
           "type": "Stmt",
           "named": true
@@ -408,11 +454,19 @@
     "named": false
   },
   {
+    "type": ":",
+    "named": false
+  },
+  {
     "type": "<",
     "named": false
   },
   {
     "type": "<=",
+    "named": false
+  },
+  {
+    "type": "<>",
     "named": false
   },
   {
@@ -428,19 +482,15 @@
     "named": false
   },
   {
-    "type": "EndIf",
-    "named": true
-  },
-  {
     "type": "ID",
     "named": true
   },
   {
-    "type": "NUM",
-    "named": true
+    "type": "[",
+    "named": false
   },
   {
-    "type": "STR",
-    "named": true
+    "type": "]",
+    "named": false
   }
 ]
