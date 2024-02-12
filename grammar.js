@@ -26,29 +26,43 @@ module.exports = grammar({
 
       MoreThanOneStmt: $ => $.Stmt,
 
+      OptStep: $ => seq(/[Ss][Tt][Ee][Pp]/, $.Expr),
+
       Stmt: $ => choice(
         $.ExprStatement,
-        seq(/[Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, $.CRStmtCRs, $.MoreThanZeroElseIf)
+        seq(/[Ww][Hh][Ii][Ll][Ee]/, $.Expr, $.CRStmtCRs, /[Ee][Nn][Dd][Ww][Hh][Ii][Ll][Ee]/),
+        seq($.ID, ":"),
+        seq(/[Gg][Oo][Tt][Oo]/, $.ID),
+        seq(/[Ff][Oo][Rr]/, $.ID, "=", $.Expr, /[Tt][Oo]/, $.Expr, optional($.OptStep), repeat($.CRStmtCRs), /[Ee][Nn][Dd][Ff][Oo][Rr]/),
+        seq(/[Ss][Uu][Bb]/, $.ID, $.CRStmtCRs, /[Ee][Nn][Dd][Ss][Uu][Bb]/),
+        seq(/[Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, repeat($.CRStmtCRs), $.MoreThanZeroElseIf)
       ),
       
       MoreThanZeroElseIf: $ => $.OptionalElse,
 
-      OptionalElse: $ => $.EndIf,
+      OptionalElse: $ => choice(
+        /[Ee][Nn][Dd][Ii][Ff]/,
+        seq(/[Ee][Ll][Ss][Ee]/, $.CRStmtCRs, /[Ee][Nn][Dd][Ii][Ff]/)
+      ),
 
       ExprStatement: $ => choice(
         seq($.ID, "=", $.Expr),
         seq($.ID, ".", $.ID, "=", $.Expr),
-        seq($.ID, ".", $.ID, "(", $.Exprs, ")"),
-        seq($.ID, "(", ")")
+        seq($.ID, ".", $.ID, "(", optional($.Exprs), ")"),
+        seq($.ID, "(", ")"),
+        seq($.ID, $.Idxs, "=", $.Expr)
       ),
 
-      CRStmtCRs: $ => seq($.CR, $.TheRest),
+      CRStmtCRs: $ => seq($.CR, repeat($.TheRest)),
 
-      TheRest: $ => seq($.Stmt, $.CR, $.TheRest),
+      TheRest: $ => seq($.Stmt, $.CR),
 
       Exprs: $ => $.MoreThanOneExpr,
 
-      MoreThanOneExpr: $ => $.Expr,
+      MoreThanOneExpr: $ => choice(
+        $.Expr,
+        seq($.Expr, ",", $.MoreThanOneExpr)
+      ),
 
       Expr: $ => $.CondExpr,
 
@@ -59,14 +73,18 @@ module.exports = grammar({
       AndExpr: $ => $.EqNeqExpr,
 
       EqNeqExpr: $ => choice(
-        $.CompExpr,
+        seq($.EqNeqExpr, "=", $.CompExpr),
+        seq($.EqNeqExpr, "<>", $.CompExpr),
+        $.CompExpr
+      ),
+
+      CompExpr: $ => choice(
         seq($.CompExpr, "<", $.AdditiveExpr),
         seq($.CompExpr, "<=", $.AdditiveExpr),
         seq($.CompExpr, ">", $.AdditiveExpr),
         seq($.CompExpr, ">=", $.AdditiveExpr),
+        $.AdditiveExpr
       ),
-
-      CompExpr: $ => $.AdditiveExpr,
 
       AdditiveExpr: $ => choice(
         seq($.AdditiveExpr, "+", $.MultiplicativeExpr),
@@ -80,7 +98,10 @@ module.exports = grammar({
         $.UnaryExpr,
       ),
 
-      UnaryExpr: $ => $.Primary,
+      UnaryExpr: $ => choice(
+        seq("-", $.Primary),
+        $.Primary
+      ),
 
       Primary: $ => choice(
         $.NUM,
@@ -88,7 +109,13 @@ module.exports = grammar({
         seq("(", $.Expr, ")"),
         $.ID,
         seq($.ID, ".", $.ID),
-        seq($.ID, ".", $.ID, "(", optional($.Exprs), ")")
+        seq($.ID, ".", $.ID, "(", optional($.Exprs), ")"),
+        seq($.ID, $.Idxs)
+      ),
+
+      Idxs: $ => choice(
+        seq("[", $.Expr, "]"),
+        seq("[", $.Expr, "]", $.Idxs)
       ),
 
       // Terminal
@@ -98,9 +125,7 @@ module.exports = grammar({
 
       NUM: _ => /([0-9]*[.])?[0-9]+/,
 
-      CR: _ => choice(/\r\n/, /\n/),
-
-      EndIf: _ => /[Ee][Nn][Dd][Ii][Ff]/
+      CR: _ => choice(/\r\n/, /\n/)
 
 
       

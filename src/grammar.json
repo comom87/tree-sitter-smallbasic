@@ -16,12 +16,145 @@
       "type": "SYMBOL",
       "name": "Stmt"
     },
+    "OptStep": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[Ss][Tt][Ee][Pp]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "Expr"
+        }
+      ]
+    },
     "Stmt": {
       "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
           "name": "ExprStatement"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[Ww][Hh][Ii][Ll][Ee]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "CRStmtCRs"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[Ee][Nn][Dd][Ww][Hh][Ii][Ll][Ee]"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "ID"
+            },
+            {
+              "type": "STRING",
+              "value": ":"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[Gg][Oo][Tt][Oo]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "ID"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[Ff][Oo][Rr]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "ID"
+            },
+            {
+              "type": "STRING",
+              "value": "="
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[Tt][Oo]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "OptStep"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "CRStmtCRs"
+              }
+            },
+            {
+              "type": "PATTERN",
+              "value": "[Ee][Nn][Dd][Ff][Oo][Rr]"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[Ss][Uu][Bb]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "ID"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "CRStmtCRs"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[Ee][Nn][Dd][Ss][Uu][Bb]"
+            }
+          ]
         },
         {
           "type": "SEQ",
@@ -39,8 +172,11 @@
               "value": "[Tt][Hh][Ee][Nn]"
             },
             {
-              "type": "SYMBOL",
-              "name": "CRStmtCRs"
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "CRStmtCRs"
+              }
             },
             {
               "type": "SYMBOL",
@@ -55,8 +191,30 @@
       "name": "OptionalElse"
     },
     "OptionalElse": {
-      "type": "SYMBOL",
-      "name": "EndIf"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[Ee][Nn][Dd][Ii][Ff]"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[Ee][Ll][Ss][Ee]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "CRStmtCRs"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[Ee][Nn][Dd][Ii][Ff]"
+            }
+          ]
+        }
+      ]
     },
     "ExprStatement": {
       "type": "CHOICE",
@@ -123,8 +281,16 @@
               "value": "("
             },
             {
-              "type": "SYMBOL",
-              "name": "Exprs"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "Exprs"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             },
             {
               "type": "STRING",
@@ -148,6 +314,27 @@
               "value": ")"
             }
           ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "ID"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Idxs"
+            },
+            {
+              "type": "STRING",
+              "value": "="
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
+            }
+          ]
         }
       ]
     },
@@ -159,8 +346,11 @@
           "name": "CR"
         },
         {
-          "type": "SYMBOL",
-          "name": "TheRest"
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "TheRest"
+          }
         }
       ]
     },
@@ -174,10 +364,6 @@
         {
           "type": "SYMBOL",
           "name": "CR"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "TheRest"
         }
       ]
     },
@@ -186,8 +372,30 @@
       "name": "MoreThanOneExpr"
     },
     "MoreThanOneExpr": {
-      "type": "SYMBOL",
-      "name": "Expr"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "Expr"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
+            },
+            {
+              "type": "STRING",
+              "value": ","
+            },
+            {
+              "type": "SYMBOL",
+              "name": "MoreThanOneExpr"
+            }
+          ]
+        }
+      ]
     },
     "Expr": {
       "type": "SYMBOL",
@@ -209,9 +417,48 @@
       "type": "CHOICE",
       "members": [
         {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "EqNeqExpr"
+            },
+            {
+              "type": "STRING",
+              "value": "="
+            },
+            {
+              "type": "SYMBOL",
+              "name": "CompExpr"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "EqNeqExpr"
+            },
+            {
+              "type": "STRING",
+              "value": "<>"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "CompExpr"
+            }
+          ]
+        },
+        {
           "type": "SYMBOL",
           "name": "CompExpr"
-        },
+        }
+      ]
+    },
+    "CompExpr": {
+      "type": "CHOICE",
+      "members": [
         {
           "type": "SEQ",
           "members": [
@@ -279,12 +526,12 @@
               "name": "AdditiveExpr"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "AdditiveExpr"
         }
       ]
-    },
-    "CompExpr": {
-      "type": "SYMBOL",
-      "name": "AdditiveExpr"
     },
     "AdditiveExpr": {
       "type": "CHOICE",
@@ -373,8 +620,26 @@
       ]
     },
     "UnaryExpr": {
-      "type": "SYMBOL",
-      "name": "Primary"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Primary"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "Primary"
+        }
+      ]
     },
     "Primary": {
       "type": "CHOICE",
@@ -461,6 +726,62 @@
               "value": ")"
             }
           ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "ID"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Idxs"
+            }
+          ]
+        }
+      ]
+    },
+    "Idxs": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "["
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
+            },
+            {
+              "type": "STRING",
+              "value": "]"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "["
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
+            },
+            {
+              "type": "STRING",
+              "value": "]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Idxs"
+            }
+          ]
         }
       ]
     },
@@ -488,10 +809,6 @@
           "value": "\\n"
         }
       ]
-    },
-    "EndIf": {
-      "type": "PATTERN",
-      "value": "[Ee][Nn][Dd][Ii][Ff]"
     }
   },
   "extras": [
