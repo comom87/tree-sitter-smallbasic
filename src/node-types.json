@@ -287,6 +287,10 @@
       "required": true,
       "types": [
         {
+          "type": "CR",
+          "named": true
+        },
+        {
           "type": "Expr",
           "named": true
         }
@@ -464,6 +468,10 @@
   },
   {
     "type": "+",
+    "named": false
+  },
+  {
+    "type": ",",
     "named": false
   },
   {

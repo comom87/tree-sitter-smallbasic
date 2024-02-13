@@ -51,14 +51,15 @@ module.exports = grammar({
     MoreThanOneExpr: $ => choice(
       $.Expr,
       seq($.Expr, $.MoreThanOneExpr),
+      seq($.Expr, ",", $.MoreThanOneExpr)
     ),
 
     // CRStmtCRS -> CR TheRest
     // CR은 다음 2가지 "\r\n" or "\n"
     // "\r\n" or "\n" 정규표현식 : /\r\n|\n/ 캐리지리턴이 있거나 없거나 둘 중 하나
-    CRStmtCRs: $ => seq($.CR , $.TheRest),
+    CRStmtCRs: $ => seq($.CR, $.TheRest),
 
-    TheRest: $ => seq($.Stmt, $.CR, $.TheRest),
+    TheRest: $ => seq($.Stmt, $.CR, optional($.TheRest)),
 
     MoreThanZeroElseIf: $ => choice(
       $.OptionalElse,
@@ -71,6 +72,7 @@ module.exports = grammar({
     ),
 
     OptStep: $ => choice(
+      $.CR,
       seq(/[Ss][Tt][Ee][Pp]/, $.Expr),
     ),
 

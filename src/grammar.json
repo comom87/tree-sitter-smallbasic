@@ -8,6 +8,32 @@
         "name": "MoreThanOneStmt"
       }
     },
+    "MoreThanOneStmt": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "Stmt"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "Stmt"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "CR"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "MoreThanOneStmt"
+            }
+          ]
+        }
+      ]
+    },
     "Stmt": {
       "type": "CHOICE",
       "members": [
@@ -151,66 +177,6 @@
         }
       ]
     },
-    "MoreThanZeroElseIf": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "OptionalElse"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "[Ee][Ll][Ss][Ee][Ii][Ff]"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "Expr"
-            },
-            {
-              "type": "PATTERN",
-              "value": "[Tt][Hh][Ee][Nn]"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "CRStmtCRs"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "MoreThanZeroElseIf"
-            }
-          ]
-        }
-      ]
-    },
-    "OptionalElse": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[Ee][Nn][Dd][Ii][Ff]"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "[Ee][Ll][Ss][Ee]"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "CRStmtCRs"
-            },
-            {
-              "type": "PATTERN",
-              "value": "[Ee][Nn][Dd][Ii][Ff]"
-            }
-          ]
-        }
-      ]
-    },
     "ExprStatement": {
       "type": "CHOICE",
       "members": [
@@ -325,80 +291,6 @@
         }
       ]
     },
-    "CRStmtCRs": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "CR"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "TheRest"
-        }
-      ]
-    },
-    "TheRest": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "Stmt"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "CR"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "TheRest"
-        }
-      ]
-    },
-    "MoreThanOneStmt": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "Stmt"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "Stmt"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "CR"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "MoreThanOneStmt"
-            }
-          ]
-        }
-      ]
-    },
-    "OptStep": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "[Ss][Tt][Ee][Pp]"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "Expr"
-            }
-          ]
-        }
-      ]
-    },
     "Expr": {
       "type": "SYMBOL",
       "name": "CondExpr"
@@ -424,6 +316,143 @@
             {
               "type": "SYMBOL",
               "name": "MoreThanOneExpr"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
+            },
+            {
+              "type": "STRING",
+              "value": ","
+            },
+            {
+              "type": "SYMBOL",
+              "name": "MoreThanOneExpr"
+            }
+          ]
+        }
+      ]
+    },
+    "CRStmtCRs": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "CR"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "TheRest"
+        }
+      ]
+    },
+    "TheRest": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "Stmt"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "CR"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "TheRest"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "MoreThanZeroElseIf": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "OptionalElse"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[Ee][Ll][Ss][Ee][Ii][Ff]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[Tt][Hh][Ee][Nn]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "CRStmtCRs"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "MoreThanZeroElseIf"
+            }
+          ]
+        }
+      ]
+    },
+    "OptionalElse": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[Ee][Nn][Dd][Ii][Ff]"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[Ee][Ll][Ss][Ee]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "CRStmtCRs"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[Ee][Nn][Dd][Ii][Ff]"
+            }
+          ]
+        }
+      ]
+    },
+    "OptStep": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "CR"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[Ss][Tt][Ee][Pp]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "Expr"
             }
           ]
         }
