@@ -21,6 +21,11 @@ module.exports = grammar({
     // Program이 MoreThanOneStmt의 반복임을 표현하기 위해 repeat 사용
     Prog: $ => repeat($.MoreThanOneStmt),
 
+    MoreThanOneStmt: $ => choice(
+      $.Stmt,
+      seq($.Stmt, $.CR, $.MoreThanOneStmt),
+    ),
+
     Stmt: $ => choice(
       $.ExprStatement,
       seq( /[Ww][Hh][Ii][Ll][Ee]/,  $.Expr, $.CRStmtCRs, /[Ee][Nn][Dd][Ww][Hh][Ii][Ll][Ee]/),
@@ -30,6 +35,30 @@ module.exports = grammar({
       seq(/[Ss][Uu][Bb]/, $.ID, $.CRStmtCRs, /[Ee][Nn][Dd][Ss][Uu][Bb]/),
       seq(/[Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, $.CRStmtCRs, $.MoreThanZeroElseIf),
     ),
+
+    ExprStatement: $ => choice(
+      seq($.ID, "=", $.Expr),
+      seq($.ID, ".", $.ID, "=", $.Expr),
+      seq($.ID, ".", $.ID, "(", $.Exprs, ")"),
+      seq($.ID, "(", ")"),
+      seq($.ID, $.Idxs, "=", $.Expr),
+    ),
+
+    Expr: $ => $.CondExpr,
+
+    Exprs: $ => $.MoreThanOneExpr,
+
+    MoreThanOneExpr: $ => choice(
+      $.Expr,
+      seq($.Expr, $.MoreThanOneExpr),
+    ),
+
+    // CRStmtCRS -> CR TheRest
+    // CR은 다음 2가지 "\r\n" or "\n"
+    // "\r\n" or "\n" 정규표현식 : /\r\n|\n/ 캐리지리턴이 있거나 없거나 둘 중 하나
+    CRStmtCRs: $ => seq($.CR , $.TheRest),
+
+    TheRest: $ => seq($.Stmt, $.CR, $.TheRest),
 
     MoreThanZeroElseIf: $ => choice(
       $.OptionalElse,
@@ -41,44 +70,8 @@ module.exports = grammar({
       seq(/[Ee][Ll][Ss][Ee]/, $.CRStmtCRs, /[Ee][Nn][Dd][Ii][Ff]/)
     ),
 
-    ExprStatement: $ => choice(
-      seq($.ID, "=", $.Expr),
-      seq($.ID, ".", $.ID, "=", $.Expr),
-      seq($.ID, ".", $.ID, "(", $.Exprs, ")"),
-      seq($.ID, "(", ")"),
-      seq($.ID, $.Idxs, "=", $.Expr),
-    ),
-    
-    // CRStmtCRS -> CR TheRest
-    // CR은 다음 2가지 "\r\n" or "\n"
-    // "\r\n" or "\n" 정규표현식 : /\r\n|\n/ 캐리지리턴이 있거나 없거나 둘 중 하나
-    CRStmtCRs: $ => seq(choice(/\r\n/, /\n/) ,$.TheRest),
-
-    TheRest: $ => choice(
-      // *공백이 오는 경우 표현(확인 후 작성 필요)
-      seq($.Stmt, choice(/\r\n/, /\n/), $.TheRest),
-    ),
-
-    MoreThanOneStmt: $ => choice(
-      $.Stmt,
-      seq($.Stmt, choice(/\r\n/, /\n/), $.MoreThanOneStmt),
-    ),
-
     OptStep: $ => choice(
-      // *공백이 오는 경우 표현(확인 후 작성 필요),
       seq(/[Ss][Tt][Ee][Pp]/, $.Expr),
-    ),
-
-    Expr: $ => $.CondExpr,
-
-    Exprs: $ => choice(
-      // *공백이 오는 경우 표현(확인 후 작성 필요),
-      $.MoreThanOneExpr,
-    ),
-
-    MoreThanOneExpr: $ => choice(
-      $.Expr,
-      seq($.Expr, $.MoreThanOneExpr),
     ),
 
     CondExpr: $ => $.OrExpr,
@@ -127,8 +120,8 @@ module.exports = grammar({
 
     // 파싱 진행시 충돌이 발생하여 우선순위 추가(숫자가 높으면 우선순위 높음)
     Primary: $ => choice(
-      prec(6, /([0-9]*[.])?[0-9]+/),
-      prec(5, /\"[^\"]*\"/),
+      prec(6, $.NUM),
+      prec(5, $.STR),
       prec(4, seq("(", $.Expr, ")")),
       prec(3, $.ID),
       prec(2, seq($.ID, ".", $.ID)),
@@ -142,6 +135,12 @@ module.exports = grammar({
     ),
 
     // Terminals
-    ID: _ => /[_a-zA-Z][_a-zA-Z0-9]*/
+    ID: _ => /[_a-zA-Z][_a-zA-Z0-9]*/,
+
+    STR: _ => /\"[^\"]*\"/,
+
+    NUM: _ => /([0-9]*[.])?[0-9]+/,
+
+    CR: _ => choice(/\r\n/, /\n/)
   }
 });

@@ -38,13 +38,22 @@
     }
   },
   {
+    "type": "CR",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "CRStmtCRs",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "CR",
+          "named": true
+        },
         {
           "type": "TheRest",
           "named": true
@@ -209,6 +218,10 @@
       "required": true,
       "types": [
         {
+          "type": "CR",
+          "named": true
+        },
+        {
           "type": "MoreThanOneStmt",
           "named": true
         },
@@ -320,7 +333,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "Expr",
@@ -336,6 +349,14 @@
         },
         {
           "type": "Idxs",
+          "named": true
+        },
+        {
+          "type": "NUM",
+          "named": true
+        },
+        {
+          "type": "STR",
           "named": true
         }
       ]
@@ -399,6 +420,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "CR",
+          "named": true
+        },
         {
           "type": "Stmt",
           "named": true
@@ -483,6 +508,14 @@
   },
   {
     "type": "ID",
+    "named": true
+  },
+  {
+    "type": "NUM",
+    "named": true
+  },
+  {
+    "type": "STR",
     "named": true
   },
   {

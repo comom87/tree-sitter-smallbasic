@@ -329,17 +329,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "\\r\\n"
-            },
-            {
-              "type": "PATTERN",
-              "value": "\\n"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "CR"
         },
         {
           "type": "SYMBOL",
@@ -348,33 +339,19 @@
       ]
     },
     "TheRest": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "Stmt"
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "PATTERN",
-                  "value": "\\r\\n"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "\\n"
-                }
-              ]
-            },
-            {
-              "type": "SYMBOL",
-              "name": "TheRest"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "Stmt"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "CR"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "TheRest"
         }
       ]
     },
@@ -393,17 +370,8 @@
               "name": "Stmt"
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "PATTERN",
-                  "value": "\\r\\n"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "\\n"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "CR"
             },
             {
               "type": "SYMBOL",
@@ -436,13 +404,8 @@
       "name": "CondExpr"
     },
     "Exprs": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "MoreThanOneExpr"
-        }
-      ]
+      "type": "SYMBOL",
+      "name": "MoreThanOneExpr"
     },
     "MoreThanOneExpr": {
       "type": "CHOICE",
@@ -757,16 +720,16 @@
           "type": "PREC",
           "value": 6,
           "content": {
-            "type": "PATTERN",
-            "value": "([0-9]*[.])?[0-9]+"
+            "type": "SYMBOL",
+            "name": "NUM"
           }
         },
         {
           "type": "PREC",
           "value": 5,
           "content": {
-            "type": "PATTERN",
-            "value": "\\\"[^\\\"]*\\\""
+            "type": "SYMBOL",
+            "name": "STR"
           }
         },
         {
@@ -917,6 +880,27 @@
     "ID": {
       "type": "PATTERN",
       "value": "[_a-zA-Z][_a-zA-Z0-9]*"
+    },
+    "STR": {
+      "type": "PATTERN",
+      "value": "\\\"[^\\\"]*\\\""
+    },
+    "NUM": {
+      "type": "PATTERN",
+      "value": "([0-9]*[.])?[0-9]+"
+    },
+    "CR": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "\\r\\n"
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\n"
+        }
+      ]
     }
   },
   "extras": [
