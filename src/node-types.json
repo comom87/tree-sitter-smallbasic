@@ -23,9 +23,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "AndExpr",
+          "named": true
+        },
         {
           "type": "EqNeqExpr",
           "named": true
@@ -225,9 +229,21 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "CRStmtCRs",
+          "named": true
+        },
+        {
+          "type": "Expr",
+          "named": true
+        },
+        {
+          "type": "MoreThanZeroElseIf",
+          "named": true
+        },
         {
           "type": "OptionalElse",
           "named": true
@@ -289,11 +305,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "AndExpr",
+          "named": true
+        },
+        {
+          "type": "OrExpr",
           "named": true
         }
       ]
@@ -492,6 +512,10 @@
   {
     "type": ">=",
     "named": false
+  },
+  {
+    "type": "Comment",
+    "named": true
   },
   {
     "type": "ID",

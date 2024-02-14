@@ -1,9 +1,10 @@
 module.exports = grammar({
     name: "nodejs",
 
-    // extras: $ => [
-    //   /[\s\p{Zs}\uFEFF\u2028\u2029\u2060\u200B]/
-    // ],
+    extras: $ => [
+      $.Comment,
+      /[\s\t\p{Zs}\uFEFF\u2028\u2029\u2060\u200B]/
+    ],
   
     rules: {
       // TODO: add the actual grammar rules
@@ -30,7 +31,7 @@ module.exports = grammar({
 
       Stmt: $ => choice(
         $.ExprStatement,
-        seq(/[Ww][Hh][Ii][Ll][Ee]/, $.Expr, $.CRStmtCRs, /[Ee][Nn][Dd][Ww][Hh][Ii][Ll][Ee]/),
+        seq(/[Ww][Hh][Ii][Ll][Ee]/, $.Expr, repeat($.CRStmtCRs), /[Ee][Nn][Dd][Ww][Hh][Ii][Ll][Ee]/),
         seq($.ID, ":"),
         seq(/[Gg][Oo][Tt][Oo]/, $.ID),
         seq(/[Ff][Oo][Rr]/, $.ID, "=", $.Expr, /[Tt][Oo]/, $.Expr, optional($.OptStep), repeat($.CRStmtCRs), /[Ee][Nn][Dd][Ff][Oo][Rr]/),
@@ -38,7 +39,10 @@ module.exports = grammar({
         seq(/[Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, repeat($.CRStmtCRs), $.MoreThanZeroElseIf)
       ),
       
-      MoreThanZeroElseIf: $ => $.OptionalElse,
+      MoreThanZeroElseIf: $ => choice(
+        $.OptionalElse,
+        seq(/[Ee][Ll][Ss][Ee][Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, repeat($.CRStmtCRs), $.MoreThanZeroElseIf)
+      ),
 
       OptionalElse: $ => choice(
         /[Ee][Nn][Dd][Ii][Ff]/,
@@ -68,9 +72,15 @@ module.exports = grammar({
 
       CondExpr: $ => $.OrExpr,
 
-      OrExpr: $ => $.AndExpr,
+      OrExpr: $ => choice(
+        seq($.OrExpr, /[Oo][Rr]/, $.AndExpr),
+        $.AndExpr
+      ),
 
-      AndExpr: $ => $.EqNeqExpr,
+      AndExpr: $ => choice(
+        seq($.AndExpr, /[Aa][Nn][Dd]/, $.EqNeqExpr),
+        $.EqNeqExpr
+      ),
 
       EqNeqExpr: $ => choice(
         seq($.EqNeqExpr, "=", $.CompExpr),
@@ -125,7 +135,9 @@ module.exports = grammar({
 
       NUM: _ => /([0-9]*[.])?[0-9]+/,
 
-      CR: _ => choice(/\r\n/, /\n/)
+      CR: _ => choice(/\r\n/, /\n/),
+
+      Comment: _ => token(seq(/\'/, /.*/))
 
 
       
