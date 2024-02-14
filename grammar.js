@@ -9,6 +9,12 @@ module.exports = grammar({
   ],
   
   // 공백 문자 혹은 주석 관련 심볼 처리
+  // \s : 공백 문자 처리(Space/Tab/CR/NewLine/VerticalTab)
+  // \p{Zs} : 유니코드 공백문자 처리
+  // \uFEFF : 바이트 순서 표시
+  // \u2028 : Line Separator
+  // \u2029 : Paragraph Separator
+  // \u2060 : Word Joiner
   extras: $ => [
     // $.comment, 주석관련 심볼 처리
     /[\s\p{Zs}\uFEFF\u2028\u2029\u2060\u200B]/,
@@ -137,6 +143,11 @@ module.exports = grammar({
     ),
 
     // Terminals
+    // Identifier & String & Number & Carriage Return
+    // ID : [_a-zA-Z] 이후 [_a-zA-Z0-9] 0번 이상 반복
+    // STR : ""로 싸여진 문자열. [^\"] "를 제외한 모든 문자 0번 이상 반복
+    // NUM : 정수.소수 형태 or 정수 형태
+    // CR : \r\n or \n 즉 줄바꿈 처리
     ID: _ => /[_a-zA-Z][_a-zA-Z0-9]*/,
 
     STR: _ => /\"[^\"]*\"/,
