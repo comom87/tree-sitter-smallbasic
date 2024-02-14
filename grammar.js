@@ -1,234 +1,148 @@
 module.exports = grammar({
-    name: "nodejs",
+  // 적용하고자 하는 프로그래밍언어를 관례적으로 작성(기능상에 문제는 X)
+  // 추후 smallbasic으로 수정 혹은 grammar.js만 옮겨 프로젝트 재생성
+  name: "nodejs",
 
-    // extras: $ => [
-    //   /[\s\p{Zs}\uFEFF\u2028\u2029\u2060\u200B]/
-    // ],
+  // 충돌되는 일부 rules에 대한 우선순위 정의(전자가 우선순위 높은것)
+  conflicts: $ => [
+    [$.CompExpr, $.AdditiveExpr]
+  ],
   
-    rules: {
-      // TODO: add the actual grammar rules
-      // program: $ => repeat(choice(
-      //   $._command_or_entry,
-      //   $.junk,
-      //   $.comment
-      // )),
-  
-      // junk: $ => /[^%@\s\n\t][^%@]*/,
-  
-      // comment: $ => token(seq("%", /.*/)),
+  // 공백 문자 혹은 주석 관련 심볼 처리
+  extras: $ => [
+    // $.comment, 주석관련 심볼 처리
+    /[\s\p{Zs}\uFEFF\u2028\u2029\u2060\u200B]/,
+  ],
 
-      // _command_or_entry: $ => seq("@", /[a-zA-Z]+/)
+  rules: {
+    // Non-Terminals
+    // Start: $ => $.Prog,
 
-      // Non-Terminal
-      Start: $ => repeat($.Prog),
+    // Program이 MoreThanOneStmt의 반복임을 표현하기 위해 repeat 사용
+    Prog: $ => repeat($.MoreThanOneStmt),
 
-      Prog: $ => $.MoreThanOneStmt,
+    MoreThanOneStmt: $ => choice(
+      $.Stmt,
+      seq($.Stmt, $.CR, $.MoreThanOneStmt),
+    ),
 
-      MoreThanOneStmt: $ => $.Stmt,
+    Stmt: $ => choice(
+      $.ExprStatement,
+      seq( /[Ww][Hh][Ii][Ll][Ee]/,  $.Expr, $.CRStmtCRs, /[Ee][Nn][Dd][Ww][Hh][Ii][Ll][Ee]/),
+      seq($.ID, ":"),
+      seq(/[Gg][Oo][Tt][Oo]/, $.ID),
+      seq(/[Ff][Oo][Rr]/, $.ID, "=", $.Expr, /[Tt][Oo]/, $.Expr, $.OptStep, $.CRStmtCRs, /[Ee][Nn][Dd][Ff][Oo][Rr]/),
+      seq(/[Ss][Uu][Bb]/, $.ID, $.CRStmtCRs, /[Ee][Nn][Dd][Ss][Uu][Bb]/),
+      seq(/[Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, $.CRStmtCRs, $.MoreThanZeroElseIf),
+    ),
 
-      Stmt: $ => choice(
-        $.ExprStatement,
-        seq(/[Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, $.CRStmtCRs, $.MoreThanZeroElseIf)
-      ),
-      
-      MoreThanZeroElseIf: $ => $.OptionalElse,
+    ExprStatement: $ => choice(
+      seq($.ID, "=", $.Expr),
+      seq($.ID, ".", $.ID, "=", $.Expr),
+      seq($.ID, ".", $.ID, "(", $.Exprs, ")"),
+      seq($.ID, "(", ")"),
+      seq($.ID, $.Idxs, "=", $.Expr),
+    ),
 
-      OptionalElse: $ => $.EndIf,
+    Expr: $ => $.CondExpr,
 
-      ExprStatement: $ => choice(
-        seq($.ID, "=", $.Expr),
-        seq($.ID, ".", $.ID, "=", $.Expr),
-        seq($.ID, ".", $.ID, "(", $.Exprs, ")"),
-        seq($.ID, "(", ")")
-      ),
+    Exprs: $ => $.MoreThanOneExpr,
 
-      CRStmtCRs: $ => seq($.CR, $.TheRest),
+    MoreThanOneExpr: $ => choice(
+      $.Expr,
+      seq($.Expr, $.MoreThanOneExpr),
+      seq($.Expr, ",", $.MoreThanOneExpr)
+    ),
 
-      TheRest: $ => seq($.Stmt, $.CR, $.TheRest),
+    // CRStmtCRS -> CR TheRest
+    // CR은 다음 2가지 "\r\n" or "\n"
+    // "\r\n" or "\n" 정규표현식 : /\r\n|\n/ 캐리지리턴이 있거나 없거나 둘 중 하나
+    CRStmtCRs: $ => seq($.CR, $.TheRest),
 
-      Exprs: $ => $.MoreThanOneExpr,
+    TheRest: $ => seq($.Stmt, $.CR, optional($.TheRest)),
 
-      MoreThanOneExpr: $ => $.Expr,
+    MoreThanZeroElseIf: $ => choice(
+      $.OptionalElse,
+      seq(/[Ee][Ll][Ss][Ee][Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, $.CRStmtCRs, $.MoreThanZeroElseIf),
+    ),
+    
+    OptionalElse: $ => choice(
+      /[Ee][Nn][Dd][Ii][Ff]/,
+      seq(/[Ee][Ll][Ss][Ee]/, $.CRStmtCRs, /[Ee][Nn][Dd][Ii][Ff]/)
+    ),
 
-      Expr: $ => $.CondExpr,
+    OptStep: $ => choice(
+      $.CR,
+      seq(/[Ss][Tt][Ee][Pp]/, $.Expr),
+    ),
 
-      CondExpr: $ => $.OrExpr,
+    CondExpr: $ => $.OrExpr,
 
-      OrExpr: $ => $.AndExpr,
+    OrExpr: $ => choice(
+      seq($.OrExpr, /[Oo][Rr]/, $.AndExpr),
+      $.AndExpr
+    ),
 
-      AndExpr: $ => $.EqNeqExpr,
+    AndExpr: $ => choice(
+      seq($.AndExpr, /[Aa][Nn][Dd]/, $.EqNeqExpr),
+      $.EqNeqExpr
+    ),
+    
+    // <>의 뜻은 NotEqual(!=와 같음)
+    EqNeqExpr: $ => choice(
+      seq($.EqNeqExpr, "=", $.CompExpr),
+      seq($.EqNeqExpr, "<>", $.CompExpr),
+      $.CompExpr,
+    ),
 
-      EqNeqExpr: $ => choice(
-        $.CompExpr,
-        seq($.CompExpr, "<", $.AdditiveExpr),
-        seq($.CompExpr, "<=", $.AdditiveExpr),
-        seq($.CompExpr, ">", $.AdditiveExpr),
-        seq($.CompExpr, ">=", $.AdditiveExpr),
-      ),
+    CompExpr: $ => choice(
+      seq($.CompExpr, "<", $.AdditiveExpr),
+      seq($.CompExpr, "<=", $.AdditiveExpr),
+      seq($.CompExpr, ">", $.AdditiveExpr),
+      seq($.CompExpr, ">=", $.AdditiveExpr),
+      $.AdditiveExpr,
+    ),
 
-      CompExpr: $ => $.AdditiveExpr,
+    AdditiveExpr: $ => choice(
+      seq($.AdditiveExpr, "+", $.MultiplicativeExpr),
+      seq($.AdditiveExpr, "-", $.MultiplicativeExpr),
+      $.MultiplicativeExpr
+    ),
 
-      AdditiveExpr: $ => choice(
-        seq($.AdditiveExpr, "+", $.MultiplicativeExpr),
-        seq($.AdditiveExpr, "-", $.MultiplicativeExpr),
-        $.MultiplicativeExpr
-      ),
+    MultiplicativeExpr: $ => choice(
+      seq($.MultiplicativeExpr, "*", $.UnaryExpr),
+      seq($.MultiplicativeExpr, "/", $.UnaryExpr),
+      $.UnaryExpr
+    ),
 
-      MultiplicativeExpr: $ => choice(
-        seq($.MultiplicativeExpr, "*", $.UnaryExpr),
-        seq($.MultiplicativeExpr, "/", $.UnaryExpr),
-        $.UnaryExpr,
-      ),
+    UnaryExpr: $ => choice(
+      seq("-", $.Primary),
+      $.Primary
+    ),
 
-      UnaryExpr: $ => $.Primary,
+    // 파싱 진행시 충돌이 발생하여 우선순위 추가(숫자가 높으면 우선순위 높음)
+    Primary: $ => choice(
+      prec(6, $.NUM),
+      prec(5, $.STR),
+      prec(4, seq("(", $.Expr, ")")),
+      prec(3, $.ID),
+      prec(2, seq($.ID, ".", $.ID)),
+      prec(1, seq($.ID, ".", $.ID, "(", $.Exprs, ")")),
+      prec(0, seq($.ID, $.Idxs))
+    ),
 
-      Primary: $ => choice(
-        $.NUM,
-        $.STR,
-        seq("(", $.Expr, ")"),
-        $.ID,
-        seq($.ID, ".", $.ID),
-        seq($.ID, ".", $.ID, "(", optional($.Exprs), ")")
-      ),
+    Idxs: $ => choice(
+      seq("[", $.Expr, "]"),
+      seq("[", $.Expr, "]", $.Idxs)
+    ),
 
-      // Terminal
-      ID: _ => /[_a-zA-Z][_a-zA-Z0-9]*/,
+    // Terminals
+    ID: _ => /[_a-zA-Z][_a-zA-Z0-9]*/,
 
-      STR: _ => /\"[^\"]*\"/,
+    STR: _ => /\"[^\"]*\"/,
 
-      NUM: _ => /([0-9]*[.])?[0-9]+/,
+    NUM: _ => /([0-9]*[.])?[0-9]+/,
 
-      CR: _ => choice(/\r\n/, /\n/),
-
-      EndIf: _ => /[Ee][Nn][Dd][Ii][Ff]/
-
-
-      
-      // // Non-Terminals
-      // Start: $ => $.Prog,
-
-      // Prog: $ => $.MoreThanOneStmt,
-
-      // Stmt: $ => choice(
-      //   $.ExprStatement,
-      //   seq( /[Ww][Hh][Ii][Ll][Ee]/,  $.Expr, $.CRStmtCRs, /[Ee][Nn][Dd][Ww][Hh][Ii][Ll][Ee]/),
-      //   seq($.ID, ":"),
-      //   seq(/[Gg][Oo][Tt][Oo]/, $.ID),
-      //   seq(/[Ff][Oo][Rr]/, $.ID, "=", $.Expr, /[Tt][Oo]/, $.Expr, $.OptStep, $.CRStmtCRs, /[Ee][Nn][Dd][Ff][Oo][Rr]/),
-      //   seq(/[Ss][Uu][Bb]/, $.ID, $.CRStmtCRs, /[Ee][Nn][Dd][Ss][Uu][Bb]/),
-      //   seq(/[Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, $.CRStmtCRs, $.MoreThanZeroElseIf),
-      //   // *공백이 오는 경우 표현(확인 후 작성 필요)
-      // ),
-
-      // MoreThanZeroElseIf: $ => choice(
-      //   $.OptionalElse,
-      //   seq(/[Ee][Ll][Ss][Ee][Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, $.CRStmtCRs, $.MoreThanZeroElseIf),
-      // ),
-      
-      // OptionalElse: $ => choice(
-      //   /[Ee][Nn][Dd][Ii][Ff]/,
-      //   seq(/[Ee][Ll][Ss][Ee]/, $.CRStmtCRs, /[Ee][Nn][Dd][Ii][Ff]/)
-      // ),
-
-      // ExprStatement: $ => choice(
-      //   seq($.ID, "=", $.Expr),
-      //   seq($.ID, ".", $.ID, "=", $.Expr),
-      //   seq($.ID, ".", $.ID, "(", $.Exprs, ")"),
-      //   seq($.ID, "(", ")"),
-      //   seq($.ID, $.Idxs, "=", $.Expr),
-      // ),
-      
-      // // CRStmtCRS -> CR TheRest
-      // // CR은 다음 2가지 "\r\n" or "\n"
-      // // "\r\n" or "\n" 정규표현식 : /\r\n|\n/ 캐리지리턴이 있거나 없거나 둘 중 하나
-      // CRStmtCRs: $ => seq(choice(/\r\n|\n/) ,$.TheRest),
-
-      // TheRest: $ => choice(
-      //   // *공백이 오는 경우 표현(확인 후 작성 필요)
-      //   seq($.Stmt, choice(/\r\n|\n/), $.TheRest),
-      // ),
-
-      // MoreThanOneStmt: $ => choice(
-      //   $.Stmt,
-      //   seq($.Stmt, choice(/\r\n|\n/), $.MoreThanOneStmt),
-      // ),
-
-      // OptStep: $ => choice(
-      //   // *공백이 오는 경우 표현(확인 후 작성 필요),
-      //   seq(/[Ss][Tt][Ee][Pp]/, $.Expr),
-      // ),
-
-      // Expr: $ => $.CondExpr,
-
-      // Exprs: $ => choice(
-      //   // *공백이 오는 경우 표현(확인 후 작성 필요),
-      //   $.MoreThanOneExpr,
-      // ),
-
-      // MoreThanOneExpr: $ => choice(
-      //   $.Expr,
-      //   seq($.Expr, $.MoreThanOneExpr),
-      // ),
-
-      // CondExpr: $ => $.OrExpr,
-
-      // OrExpr: $ => choice(
-      //   seq($.OrExpr, /[Oo][Rr]/, $.AndExpr),
-      // ),
-
-      // AndExpr: $ => choice(
-      //   seq($.AndExpr, /[Aa][Nn][Dd]/, $.EqNeqExpr),
-      // ),
-      
-      // // <>의 뜻은 NotEqual(!=와 같음)
-      // EqNeqExpr: $ => choice(
-      //   seq($.EqNeqExpr, "=", $.CompExpr),
-      //   seq($.EqNeqExpr, "<>", $.CompExpr),
-      //   $.CompExpr,
-      // ),
-
-      // CompExpr: $ => choice(
-      //   seq($.CompExpr, "<", $.AdditiveExpr),
-      //   seq($.CompExpr, "<=", $.AdditiveExpr),
-      //   seq($.CompExpr, ">", $.AdditiveExpr),
-      //   seq($.CompExpr, ">=", $.AdditiveExpr),
-      //   $.AdditiveExpr,
-      // ),
-
-      // AdditiveExpr: $ => choice(
-      //   seq($.AdditiveExpr, "+", $.MultiplicativeExpr),
-      //   seq($.AdditiveExpr, "-", $.MultiplicativeExpr),
-      //   $.MultiplicativeExpr
-      // ),
-
-      // MultiplicativeExpr: $ => choice(
-      //   seq($.MultiplicativeExpr, "*", $.UnaryExpr),
-      //   seq($.MultiplicativeExpr, "/", $.UnaryExpr),
-      //   $.UnaryExpr
-      // ),
-
-      // UnaryExpr: $ => choice(
-      //   seq("-", $.Primary),
-      //   $.Primary
-      // ),
-
-      // Primary: $ => choice(
-      //   /([0-9]*[.])?[0-9]+/,
-      //   /\"[^\"]*\"/,
-      //   seq("(", $.Expr, ")"),
-      //   $.ID,
-      //   seq($.ID, ".", $.ID),
-      //   seq($.ID, ".", $.ID, "(", $.Exprs, ")"),
-      //   seq($.ID, $.Idxs)
-      // ),
-
-      // Idxs: $ => choice(
-      //   seq("[", $.Expr, "]"),
-      //   seq("[", $.Expr, "]", $.Idxs)
-      // ),
-
-      // // Terminals
-      // ID: _ => /[_a-zA-Z][_a-zA-Z0-9]*/
-
-    }
-  });
+    CR: _ => choice(/\r\n/, /\n/)
+  }
+});
