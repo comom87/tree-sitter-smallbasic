@@ -214,17 +214,9 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "CR",
-          "named": true
-        },
-        {
-          "type": "MoreThanOneStmt",
-          "named": true
-        },
         {
           "type": "Stmt",
           "named": true
@@ -286,10 +278,6 @@
       "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "CR",
-          "named": true
-        },
         {
           "type": "Expr",
           "named": true
@@ -513,6 +501,10 @@
   {
     "type": ">=",
     "named": false
+  },
+  {
+    "type": "Comment",
+    "named": true
   },
   {
     "type": "ID",

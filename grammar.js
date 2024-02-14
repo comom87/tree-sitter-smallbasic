@@ -16,7 +16,7 @@ module.exports = grammar({
   // \u2029 : Paragraph Separator
   // \u2060 : Word Joiner
   extras: $ => [
-    // $.comment, 주석관련 심볼 처리
+    $.Comment, // 주석관련 심볼 처리
     /[\s\p{Zs}\uFEFF\u2028\u2029\u2060\u200B]/,
   ],
 
@@ -29,7 +29,7 @@ module.exports = grammar({
 
     MoreThanOneStmt: $ => choice(
       $.Stmt,
-      seq($.Stmt, $.CR, $.MoreThanOneStmt),
+      // seq($.Stmt, $.CR, $.MoreThanOneStmt),
     ),
 
     Stmt: $ => choice(
@@ -37,7 +37,7 @@ module.exports = grammar({
       seq( /[Ww][Hh][Ii][Ll][Ee]/,  $.Expr, $.CRStmtCRs, /[Ee][Nn][Dd][Ww][Hh][Ii][Ll][Ee]/),
       seq($.ID, ":"),
       seq(/[Gg][Oo][Tt][Oo]/, $.ID),
-      seq(/[Ff][Oo][Rr]/, $.ID, "=", $.Expr, /[Tt][Oo]/, $.Expr, $.OptStep, $.CRStmtCRs, /[Ee][Nn][Dd][Ff][Oo][Rr]/),
+      seq(/[Ff][Oo][Rr]/, $.ID, "=", $.Expr, /[Tt][Oo]/, $.Expr, optional($.OptStep), $.CRStmtCRs, /[Ee][Nn][Dd][Ff][Oo][Rr]/),
       seq(/[Ss][Uu][Bb]/, $.ID, $.CRStmtCRs, /[Ee][Nn][Dd][Ss][Uu][Bb]/),
       seq(/[Ii][Ff]/, $.Expr, /[Tt][Hh][Ee][Nn]/, $.CRStmtCRs, $.MoreThanZeroElseIf),
     ),
@@ -78,7 +78,7 @@ module.exports = grammar({
     ),
 
     OptStep: $ => choice(
-      $.CR,
+      // $.CR,
       seq(/[Ss][Tt][Ee][Pp]/, $.Expr),
     ),
 
@@ -141,6 +141,9 @@ module.exports = grammar({
       seq("[", $.Expr, "]"),
       seq("[", $.Expr, "]", $.Idxs)
     ),
+
+    Comment: _ => token(seq(/\'/, /.*/)),
+    // Comment: _ => token(seq('//', /.*/)),
 
     // Terminals
     // Identifier & String & Number & Carriage Return

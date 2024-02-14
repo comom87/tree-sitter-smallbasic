@@ -14,23 +14,6 @@
         {
           "type": "SYMBOL",
           "name": "Stmt"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "Stmt"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "CR"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "MoreThanOneStmt"
-            }
-          ]
         }
       ]
     },
@@ -116,8 +99,16 @@
               "name": "Expr"
             },
             {
-              "type": "SYMBOL",
-              "name": "OptStep"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "OptStep"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             },
             {
               "type": "SYMBOL",
@@ -439,10 +430,6 @@
     "OptStep": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "SYMBOL",
-          "name": "CR"
-        },
         {
           "type": "SEQ",
           "members": [
@@ -906,6 +893,22 @@
         }
       ]
     },
+    "Comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "\\'"
+          },
+          {
+            "type": "PATTERN",
+            "value": ".*"
+          }
+        ]
+      }
+    },
     "ID": {
       "type": "PATTERN",
       "value": "[_a-zA-Z][_a-zA-Z0-9]*"
@@ -933,6 +936,10 @@
     }
   },
   "extras": [
+    {
+      "type": "SYMBOL",
+      "name": "Comment"
+    },
     {
       "type": "PATTERN",
       "value": "[\\s\\p{Zs}\\uFEFF\\u2028\\u2029\\u2060\\u200B]"
