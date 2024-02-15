@@ -1,25 +1,19 @@
 module.exports = grammar({
     name: "nodejs",
 
+    // 공백 문자 혹은 주석 관련 심볼 처리
+    // \s : 공백 문자 처리(Space/Tab/CR/NewLine/VerticalTab)
+    // \p{Zs} : 유니코드 공백문자 처리
+    // \uFEFF : 바이트 순서 표시
+    // \u2028 : Line Separator
+    // \u2029 : Paragraph Separator
+    // \u2060 : Word Joiner
     extras: $ => [
       $.Comment,
       /[\s\t\p{Zs}\uFEFF\u2028\u2029\u2060\u200B]/
     ],
   
     rules: {
-      // TODO: add the actual grammar rules
-      // program: $ => repeat(choice(
-      //   $._command_or_entry,
-      //   $.junk,
-      //   $.comment
-      // )),
-  
-      // junk: $ => /[^%@\s\n\t][^%@]*/,
-  
-      // comment: $ => token(seq("%", /.*/)),
-
-      // _command_or_entry: $ => seq("@", /[a-zA-Z]+/)
-
       // Non-Terminal
       Start: $ => repeat($.Prog),
 
@@ -138,8 +132,6 @@ module.exports = grammar({
       CR: _ => choice(/\r\n/, /\n/),
 
       Comment: _ => token(seq(/\'/, /.*/))
-
-
       
       // // Non-Terminals
       // Start: $ => $.Prog,

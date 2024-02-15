@@ -8,4 +8,64 @@ TextWindow.WriteLine("Hello " + name)
 
 ---
 
-(source_file)
+(Start
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ExprStatement
+          (ID)
+          (ID)
+          (Exprs
+            (MoreThanOneExpr
+              (Expr
+                (CondExpr
+                  (OrExpr
+                    (AndExpr
+                      (EqNeqExpr
+                        (CompExpr
+                          (AdditiveExpr
+                            (MultiplicativeExpr
+                              (UnaryExpr
+                                (Primary
+                                  (STR)))))))))))))))))
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ExprStatement
+          (ID)
+          (Expr
+            (CondExpr
+              (OrExpr
+                (AndExpr
+                  (EqNeqExpr
+                    (CompExpr
+                      (AdditiveExpr
+                        (MultiplicativeExpr
+                          (UnaryExpr
+                            (Primary
+                              (ID)
+                              (ID)))))))))))))))
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ExprStatement
+          (ID)
+          (ID)
+          (Exprs
+            (MoreThanOneExpr
+              (Expr
+                (CondExpr
+                  (OrExpr
+                    (AndExpr
+                      (EqNeqExpr
+                        (CompExpr
+                          (AdditiveExpr
+                            (AdditiveExpr
+                              (MultiplicativeExpr
+                                (UnaryExpr
+                                  (Primary
+                                    (STR)))))
+                            (MultiplicativeExpr
+                              (UnaryExpr
+                                (Primary
+                                  (ID))))))))))))))))))

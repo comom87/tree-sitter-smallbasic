@@ -1,0 +1,100 @@
+===
+09_While
+===
+
+number = 100 
+While (number > 1)   
+	TextWindow.WriteLine(number) 
+  	number = number / 2 
+EndWhile 
+
+---
+
+(Start
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ExprStatement
+          (ID)
+          (Expr
+            (CondExpr
+              (OrExpr
+                (AndExpr
+                  (EqNeqExpr
+                    (CompExpr
+                      (AdditiveExpr
+                        (MultiplicativeExpr
+                          (UnaryExpr
+                            (Primary
+                              (NUM)))))))))))))))
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (Expr
+          (CondExpr
+            (OrExpr
+              (AndExpr
+                (EqNeqExpr
+                  (CompExpr
+                    (AdditiveExpr
+                      (MultiplicativeExpr
+                        (UnaryExpr
+                          (Primary
+                            (Expr
+                              (CondExpr
+                                (OrExpr
+                                  (AndExpr
+                                    (EqNeqExpr
+                                      (CompExpr
+                                        (CompExpr
+                                          (AdditiveExpr
+                                            (MultiplicativeExpr
+                                              (UnaryExpr
+                                                (Primary
+                                                  (ID))))))
+                                        (AdditiveExpr
+                                          (MultiplicativeExpr
+                                            (UnaryExpr
+                                              (Primary
+                                                (NUM)))))))))))))))))))))
+        (CRStmtCRs
+          (CR)
+          (TheRest
+            (Stmt
+              (ExprStatement
+                (ID)
+                (ID)
+                (Exprs
+                  (MoreThanOneExpr
+                    (Expr
+                      (CondExpr
+                        (OrExpr
+                          (AndExpr
+                            (EqNeqExpr
+                              (CompExpr
+                                (AdditiveExpr
+                                  (MultiplicativeExpr
+                                    (UnaryExpr
+                                      (Primary
+                                        (ID)))))))))))))))
+            (CR))
+          (TheRest
+            (Stmt
+              (ExprStatement
+                (ID)
+                (Expr
+                  (CondExpr
+                    (OrExpr
+                      (AndExpr
+                        (EqNeqExpr
+                          (CompExpr
+                            (AdditiveExpr
+                              (MultiplicativeExpr
+                                (MultiplicativeExpr
+                                  (UnaryExpr
+                                    (Primary
+                                      (ID))))
+                                (UnaryExpr
+                                  (Primary
+                                    (NUM)))))))))))))
+            (CR)))))))

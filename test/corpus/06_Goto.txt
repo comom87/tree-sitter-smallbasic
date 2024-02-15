@@ -1,0 +1,179 @@
+===
+06_Goto
+===
+
+begin: 
+TextWindow.Write("Enter a number: ") 
+num = TextWindow.ReadNumber() 
+remainder = Math.Remainder(num, 2) 
+If (remainder = 0) Then   
+	TextWindow.WriteLine("The number is Even") 
+Else   
+	TextWindow.WriteLine("The number is Odd") 
+EndIf 
+Goto begin 
+
+---
+
+(Start
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ID))))
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ExprStatement
+          (ID)
+          (ID)
+          (Exprs
+            (MoreThanOneExpr
+              (Expr
+                (CondExpr
+                  (OrExpr
+                    (AndExpr
+                      (EqNeqExpr
+                        (CompExpr
+                          (AdditiveExpr
+                            (MultiplicativeExpr
+                              (UnaryExpr
+                                (Primary
+                                  (STR)))))))))))))))))
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ExprStatement
+          (ID)
+          (Expr
+            (CondExpr
+              (OrExpr
+                (AndExpr
+                  (EqNeqExpr
+                    (CompExpr
+                      (AdditiveExpr
+                        (MultiplicativeExpr
+                          (UnaryExpr
+                            (Primary
+                              (ID)
+                              (ID)))))))))))))))
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ExprStatement
+          (ID)
+          (Expr
+            (CondExpr
+              (OrExpr
+                (AndExpr
+                  (EqNeqExpr
+                    (CompExpr
+                      (AdditiveExpr
+                        (MultiplicativeExpr
+                          (UnaryExpr
+                            (Primary
+                              (ID)
+                              (ID)
+                              (Exprs
+                                (MoreThanOneExpr
+                                  (Expr
+                                    (CondExpr
+                                      (OrExpr
+                                        (AndExpr
+                                          (EqNeqExpr
+                                            (CompExpr
+                                              (AdditiveExpr
+                                                (MultiplicativeExpr
+                                                  (UnaryExpr
+                                                    (Primary
+                                                      (ID)))))))))))
+                                  (MoreThanOneExpr
+                                    (Expr
+                                      (CondExpr
+                                        (OrExpr
+                                          (AndExpr
+                                            (EqNeqExpr
+                                              (CompExpr
+                                                (AdditiveExpr
+                                                  (MultiplicativeExpr
+                                                    (UnaryExpr
+                                                      (Primary
+                                                        (NUM))))))))))))))))))))))))))))
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (Expr
+          (CondExpr
+            (OrExpr
+              (AndExpr
+                (EqNeqExpr
+                  (CompExpr
+                    (AdditiveExpr
+                      (MultiplicativeExpr
+                        (UnaryExpr
+                          (Primary
+                            (Expr
+                              (CondExpr
+                                (OrExpr
+                                  (AndExpr
+                                    (EqNeqExpr
+                                      (EqNeqExpr
+                                        (CompExpr
+                                          (AdditiveExpr
+                                            (MultiplicativeExpr
+                                              (UnaryExpr
+                                                (Primary
+                                                  (ID)))))))
+                                      (CompExpr
+                                        (AdditiveExpr
+                                          (MultiplicativeExpr
+                                            (UnaryExpr
+                                              (Primary
+                                                (NUM)))))))))))))))))))))
+        (CRStmtCRs
+          (CR)
+          (TheRest
+            (Stmt
+              (ExprStatement
+                (ID)
+                (ID)
+                (Exprs
+                  (MoreThanOneExpr
+                    (Expr
+                      (CondExpr
+                        (OrExpr
+                          (AndExpr
+                            (EqNeqExpr
+                              (CompExpr
+                                (AdditiveExpr
+                                  (MultiplicativeExpr
+                                    (UnaryExpr
+                                      (Primary
+                                        (STR)))))))))))))))
+            (CR)))
+        (MoreThanZeroElseIf
+          (OptionalElse
+            (CRStmtCRs
+              (CR)
+              (TheRest
+                (Stmt
+                  (ExprStatement
+                    (ID)
+                    (ID)
+                    (Exprs
+                      (MoreThanOneExpr
+                        (Expr
+                          (CondExpr
+                            (OrExpr
+                              (AndExpr
+                                (EqNeqExpr
+                                  (CompExpr
+                                    (AdditiveExpr
+                                      (MultiplicativeExpr
+                                        (UnaryExpr
+                                          (Primary
+                                            (STR)))))))))))))))
+                (CR))))))))
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ID)))))
