@@ -165,6 +165,10 @@
       "required": true,
       "types": [
         {
+          "type": "ID",
+          "named": true
+        },
+        {
           "type": "MoreThanOneExpr",
           "named": true
         }

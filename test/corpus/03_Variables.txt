@@ -8,4 +8,76 @@ TextWindow.WriteLine("Hello " + name)
 
 ---
 
-(source_file)
+
+(Prog
+  (MoreThanOneStmt
+    (Stmt
+      (ExprStatement
+        (ID)
+        (ID)
+        (Exprs
+          (MoreThanOneExpr
+            (Expr
+              (CondExpr
+                (OrExpr
+                  (AndExpr
+                    (EqNeqExpr
+                      (CompExpr
+                        (AdditiveExpr
+                          (MultiplicativeExpr
+                            (UnaryExpr
+                              (Primary
+                                (STR))))))))))))))))
+  (MoreThanOneStmt
+    (Stmt
+      (ExprStatement
+        (ID)
+        (Expr
+          (CondExpr 
+            (OrExpr 
+              (AndExpr 
+                (EqNeqExpr 
+                  (CompExpr 
+                    (AdditiveExpr 
+                      (MultiplicativeExpr 
+                        (UnaryExpr 
+                          (Primary 
+                            (ID)
+                            (ID)
+                            (Exprs
+                              (MoreThanOneExpr
+                                (Expr
+                                  (CondExpr
+                                    (OrExpr
+                                      (AndExpr
+                                        (EqNeqExpr
+                                          (CompExpr
+                                            (AdditiveExpr
+                                              (MultiplicativeExpr
+                                                (UnaryExpr
+                                                  (Primary
+                                                    (MISSING ID))))))))))))))))))))))))))
+  (MoreThanOneStmt
+    (Stmt
+      (ExprStatement
+        (ID)
+        (ID)
+        (Exprs
+          (MoreThanOneExpr
+            (Expr
+              (CondExpr
+                (OrExpr
+                  (AndExpr
+                    (EqNeqExpr
+                      (CompExpr
+                        (AdditiveExpr
+                          (AdditiveExpr
+                            (MultiplicativeExpr
+                              (UnaryExpr
+                                (Primary
+                                  (STR)))))
+                          (MultiplicativeExpr
+                            (UnaryExpr
+                              (Primary
+                                (ID)))))))))))))))))
+

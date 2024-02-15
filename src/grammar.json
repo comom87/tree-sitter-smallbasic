@@ -287,8 +287,17 @@
       "name": "CondExpr"
     },
     "Exprs": {
-      "type": "SYMBOL",
-      "name": "MoreThanOneExpr"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "MoreThanOneExpr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ID"
+        }
+      ]
     },
     "MoreThanOneExpr": {
       "type": "CHOICE",

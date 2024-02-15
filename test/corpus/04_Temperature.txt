@@ -1,0 +1,120 @@
+===
+04_Temperature
+===
+
+TextWindow.Write("Enter temperature in Fahrenheit: ") 
+fahr = TextWindow.ReadNumber() 
+celsius = 5 * (fahr - 32) / 9 
+TextWindow.WriteLine("Temperature in Celsius is " + celsius) 
+
+---
+
+(Prog
+  (MoreThanOneStmt
+    (Stmt
+      (ExprStatement
+        (ID)
+        (ID)
+        (Exprs
+          (MoreThanOneExpr
+            (Expr
+              (CondExpr
+                (OrExpr
+                  (AndExpr
+                    (EqNeqExpr
+                      (CompExpr
+                        (AdditiveExpr
+                          (MultiplicativeExpr
+                            (UnaryExpr
+                              (Primary
+                                (STR))))))))))))))))
+  (MoreThanOneStmt
+    (Stmt
+      (ExprStatement
+        (ID)
+        (Expr
+          (CondExpr
+            (OrExpr
+              (AndExpr
+                (EqNeqExpr
+                  (CompExpr
+                    (AdditiveExpr
+                      (MultiplicativeExpr
+                        (UnaryExpr
+                          (Primary
+                            (ID)
+                            (ID)
+                            (Exprs
+                              (MoreThanOneExpr
+                                (Expr
+                                  (CondExpr
+                                    (OrExpr
+                                      (AndExpr
+                                        (EqNeqExpr
+                                          (CompExpr
+                                            (AdditiveExpr
+                                              (MultiplicativeExpr
+                                                (UnaryExpr
+                                                  (Primary
+                                                    (MISSING ID))))))))))))))))))))))))))
+  (MoreThanOneStmt
+    (Stmt
+      (ExprStatement
+        (ID)
+        (Expr
+          (CondExpr
+            (OrExpr
+              (AndExpr
+                (EqNeqExpr
+                  (CompExpr
+                    (AdditiveExpr
+                      (MultiplicativeExpr
+                        (MultiplicativeExpr
+                          (MultiplicativeExpr
+                            (UnaryExpr
+                              (Primary
+                                (NUM))))
+                          (UnaryExpr
+                            (Primary
+                              (Expr
+                                (CondExpr
+                                  (OrExpr
+                                    (AndExpr
+                                      (EqNeqExpr
+                                        (CompExpr
+                                          (AdditiveExpr
+                                            (AdditiveExpr
+                                              (MultiplicativeExpr
+                                                (UnaryExpr
+                                                  (Primary
+                                                    (ID)))))
+                                            (MultiplicativeExpr
+                                              (UnaryExpr
+                                                (Primary
+                                                  (NUM))))))))))))))
+                        (UnaryExpr
+                          (Primary
+                            (NUM))))))))))))))
+  (MoreThanOneStmt
+    (Stmt
+      (ExprStatement
+        (ID)
+        (ID)
+        (Exprs
+          (MoreThanOneExpr
+            (Expr
+              (CondExpr
+                (OrExpr
+                  (AndExpr
+                    (EqNeqExpr
+                      (CompExpr
+                        (AdditiveExpr
+                          (AdditiveExpr
+                            (MultiplicativeExpr
+                              (UnaryExpr
+                                (Primary
+                                  (STR)))))
+                          (MultiplicativeExpr
+                            (UnaryExpr
+                              (Primary
+                                (ID)))))))))))))))))
