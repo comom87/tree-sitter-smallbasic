@@ -6,23 +6,23 @@ TextWindow.WriteLine("Hello World")
 
 ---
 
-(Start
-      (Prog
-        (MoreThanOneStmt
-          (Stmt
-            (ExprStatement
-              (ID)
-              (ID)
-              (Exprs
-                (MoreThanOneExpr
-                  (Expr
-                    (CondExpr
-                      (OrExpr
-                        (AndExpr
-                          (EqNeqExpr
-                            (CompExpr
-                              (AdditiveExpr
-                                (MultiplicativeExpr
-                                  (UnaryExpr
-                                    (Primary
-                                      (STR))))))))))))))))))
+(Start 
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ExprStatement 
+          (ID)
+          (ID)
+          (Exprs
+            (MoreThanOneExpr
+              (Expr
+                (CondExpr
+                  (OrExpr
+                    (AndExpr
+                      (EqNeqExpr
+                        (CompExpr
+                          (AdditiveExpr
+                            (MultiplicativeExpr
+                              (UnaryExpr
+                                (Primary
+                                  (STR))))))))))))))))))

@@ -1,0 +1,70 @@
+===
+08_ForStep
+===
+
+For i = 10 To 1 Step -1   
+	TextWindow.WriteLine(i) 
+EndFor  
+
+---
+
+(Start
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ID)
+        (Expr
+          (CondExpr
+            (OrExpr
+              (AndExpr
+                (EqNeqExpr
+                  (CompExpr
+                    (AdditiveExpr
+                      (MultiplicativeExpr
+                        (UnaryExpr
+                          (Primary
+                            (NUM)))))))))))
+        (Expr
+          (CondExpr
+            (OrExpr
+              (AndExpr
+                (EqNeqExpr
+                  (CompExpr
+                    (AdditiveExpr
+                      (MultiplicativeExpr
+                        (UnaryExpr
+                          (Primary
+                            (NUM)))))))))))
+        (OptStep
+          (Expr
+            (CondExpr
+              (OrExpr
+                (AndExpr
+                  (EqNeqExpr
+                    (CompExpr
+                      (AdditiveExpr
+                        (MultiplicativeExpr
+                          (UnaryExpr
+                            (Primary
+                              (NUM))))))))))))
+        (CRStmtCRs
+          (CR)
+          (TheRest
+            (Stmt
+              (ExprStatement
+                (ID)
+                (ID)
+                (Exprs
+                  (MoreThanOneExpr
+                    (Expr
+                      (CondExpr
+                        (OrExpr
+                          (AndExpr
+                            (EqNeqExpr
+                              (CompExpr
+                                (AdditiveExpr
+                                  (MultiplicativeExpr
+                                    (UnaryExpr
+                                      (Primary
+                                        (ID)))))))))))))))
+            (CR)))))))

@@ -1,0 +1,15 @@
+===
+10_GraphicWindow
+===
+
+GraphicsWindow.Show() 
+
+---
+
+(Start
+  (Prog
+    (MoreThanOneStmt
+      (Stmt
+        (ExprStatement
+          (ID)
+          (ID))))))
