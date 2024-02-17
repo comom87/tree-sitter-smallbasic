@@ -1,0 +1,202 @@
+===
+25_Events
+===
+
+GraphicsWindow.BrushColor = "Blue" 
+GraphicsWindow.MouseDown = OnMouseDown 
+GraphicsWindow.KeyDown = OnKeyDown 
+
+Sub OnKeyDown   
+	GraphicsWindow.BrushColor = GraphicsWindow.GetRandomColor() 
+EndSub 
+
+Sub OnMouseDown   
+	x = GraphicsWindow.MouseX - 10   
+	y = GraphicsWindow.MouseY - 10   
+	GraphicsWindow.FillEllipse(x, y, 20, 20) 
+EndSub  
+
+---
+
+(Start 
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ExprStatement 
+          (ID)
+          (ID)
+          (Expr 
+            (CondExpr 
+              (OrExpr 
+                (AndExpr 
+                  (EqNeqExpr 
+                    (CompExpr 
+                      (AdditiveExpr 
+                        (MultiplicativeExpr 
+                          (UnaryExpr 
+                            (Primary 
+                              (STR)))))))))))))))
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ExprStatement 
+          (ID)
+          (ID)
+          (Expr 
+            (CondExpr 
+              (OrExpr 
+                (AndExpr 
+                  (EqNeqExpr 
+                    (CompExpr 
+                      (AdditiveExpr 
+                        (MultiplicativeExpr 
+                          (UnaryExpr 
+                            (Primary 
+                              (ID)))))))))))))))
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ExprStatement 
+          (ID)
+          (ID)
+          (Expr 
+            (CondExpr 
+              (OrExpr 
+                (AndExpr 
+                  (EqNeqExpr 
+                    (CompExpr 
+                      (AdditiveExpr 
+                        (MultiplicativeExpr 
+                          (UnaryExpr 
+                            (Primary 
+                              (ID)))))))))))))))
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ID)
+        (CRStmtCRs 
+          (CR)
+          (TheRest 
+            (Stmt 
+              (ExprStatement 
+                (ID)
+                (ID)
+                (Expr 
+                  (CondExpr 
+                    (OrExpr 
+                      (AndExpr 
+                        (EqNeqExpr 
+                          (CompExpr 
+                            (AdditiveExpr 
+                              (MultiplicativeExpr 
+                                (UnaryExpr 
+                                  (Primary 
+                                    (ID)
+                                    (ID)))))))))))))
+            (CR))))))
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ID)
+        (CRStmtCRs 
+          (CR)
+          (TheRest 
+            (Stmt 
+              (ExprStatement 
+                (ID)
+                (Expr 
+                  (CondExpr 
+                    (OrExpr 
+                      (AndExpr 
+                        (EqNeqExpr 
+                          (CompExpr 
+                            (AdditiveExpr 
+                              (AdditiveExpr 
+                                (MultiplicativeExpr 
+                                  (UnaryExpr 
+                                    (Primary 
+                                      (ID)
+                                      (ID)))))
+                              (MultiplicativeExpr 
+                                (UnaryExpr 
+                                  (Primary 
+                                    (NUM)))))))))))))
+            (CR))
+          (TheRest 
+            (Stmt 
+              (ExprStatement 
+                (ID)
+                (Expr 
+                  (CondExpr 
+                    (OrExpr 
+                      (AndExpr 
+                        (EqNeqExpr 
+                          (CompExpr 
+                            (AdditiveExpr 
+                              (AdditiveExpr 
+                                (MultiplicativeExpr 
+                                  (UnaryExpr 
+                                    (Primary 
+                                      (ID)
+                                      (ID)))))
+                              (MultiplicativeExpr 
+                                (UnaryExpr 
+                                  (Primary 
+                                    (NUM)))))))))))))
+            (CR))
+          (TheRest 
+            (Stmt 
+              (ExprStatement 
+                (ID)
+                (ID)
+                (Exprs 
+                  (MoreThanOneExpr 
+                    (Expr 
+                      (CondExpr 
+                        (OrExpr 
+                          (AndExpr 
+                            (EqNeqExpr 
+                              (CompExpr 
+                                (AdditiveExpr 
+                                  (MultiplicativeExpr 
+                                    (UnaryExpr 
+                                      (Primary 
+                                        (ID)))))))))))
+                    (MoreThanOneExpr 
+                      (Expr 
+                        (CondExpr 
+                          (OrExpr 
+                            (AndExpr 
+                              (EqNeqExpr 
+                                (CompExpr 
+                                  (AdditiveExpr 
+                                    (MultiplicativeExpr 
+                                      (UnaryExpr 
+                                        (Primary 
+                                          (ID)))))))))))
+                      (MoreThanOneExpr 
+                        (Expr 
+                          (CondExpr 
+                            (OrExpr 
+                              (AndExpr 
+                                (EqNeqExpr 
+                                  (CompExpr 
+                                    (AdditiveExpr 
+                                      (MultiplicativeExpr 
+                                        (UnaryExpr 
+                                          (Primary 
+                                            (NUM)))))))))))
+                        (MoreThanOneExpr 
+                          (Expr 
+                            (CondExpr 
+                              (OrExpr 
+                                (AndExpr 
+                                  (EqNeqExpr 
+                                    (CompExpr 
+                                      (AdditiveExpr 
+                                        (MultiplicativeExpr 
+                                          (UnaryExpr 
+                                            (Primary 
+                                              (NUM))))))))))))))))))
+            (CR)))))))
+
