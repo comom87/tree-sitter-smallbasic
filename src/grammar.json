@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "smallbasic",
   "rules": {
     "Start": {
       "type": "REPEAT",
