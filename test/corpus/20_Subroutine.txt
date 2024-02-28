@@ -1,0 +1,112 @@
+===
+20.Subroutine
+===
+
+PrintTime() 
+TextWindow.Write("Enter your name: ") 
+name = TextWindow.Read() 
+TextWindow.Write(name + ", the time now is: ") 
+PrintTime() 
+Sub PrintTime   
+	TextWindow.WriteLine(Clock.Time) 
+EndSub
+
+---
+
+(Start 
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ExprStatement 
+          (ID)))))
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ExprStatement 
+          (ID)
+          (ID)
+          (Exprs 
+            (MoreThanOneExpr 
+              (Expr 
+                (CondExpr 
+                  (OrExpr 
+                    (AndExpr 
+                      (EqNeqExpr 
+                        (CompExpr 
+                          (AdditiveExpr 
+                            (MultiplicativeExpr 
+                              (UnaryExpr 
+                                (Primary 
+                                  (STR)))))))))))))))))
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ExprStatement 
+          (ID)
+          (Expr 
+            (CondExpr 
+              (OrExpr 
+                (AndExpr 
+                  (EqNeqExpr 
+                    (CompExpr 
+                      (AdditiveExpr 
+                        (MultiplicativeExpr 
+                          (UnaryExpr 
+                            (Primary 
+                              (ID)
+                              (ID)))))))))))))))
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ExprStatement 
+          (ID)
+          (ID)
+          (Exprs 
+            (MoreThanOneExpr 
+              (Expr 
+                (CondExpr 
+                  (OrExpr 
+                    (AndExpr 
+                      (EqNeqExpr 
+                        (CompExpr 
+                          (AdditiveExpr 
+                            (AdditiveExpr 
+                              (MultiplicativeExpr 
+                                (UnaryExpr 
+                                  (Primary 
+                                    (ID)))))
+                            (MultiplicativeExpr 
+                              (UnaryExpr 
+                                (Primary 
+                                  (STR)))))))))))))))))
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ExprStatement 
+          (ID)))))
+  (Prog 
+    (MoreThanOneStmt 
+      (Stmt 
+        (ID)
+        (CRStmtCRs 
+          (CR)
+          (TheRest 
+            (Stmt 
+              (ExprStatement 
+                (ID)
+                (ID)
+                (Exprs 
+                  (MoreThanOneExpr 
+                    (Expr 
+                      (CondExpr 
+                        (OrExpr 
+                          (AndExpr 
+                            (EqNeqExpr 
+                              (CompExpr 
+                                (AdditiveExpr 
+                                  (MultiplicativeExpr 
+                                    (UnaryExpr 
+                                      (Primary 
+                                        (ID)
+                                        (ID)))))))))))))))
+            (CR)))))))

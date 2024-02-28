@@ -1,4 +1,0 @@
-For i = 1
-
-If (Clock.Hour < 12) Then
-	TextWindow.WriteLine
