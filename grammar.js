@@ -4,10 +4,10 @@
 module.exports = grammar({
     name: "smallbasic",
 
-    // 공백 문자 혹은 주석 관련 심볼 처리
-    // \s : 공백 문자 처리(Space/Tab/CR/NewLine/VerticalTab)
-    // \p{Zs} : 유니코드 공백문자 처리
-    // \uFEFF : 바이트 순서 표시
+    // Processing blank characters or annotation-related symbols
+    // \s : Processing blank characters(Space/Tab/CR/NewLine/VerticalTab)
+    // \p{Zs} : Unicode blank character processing
+    // \uFEFF : Show Byte Order
     // \u2028 : Line Separator
     // \u2029 : Paragraph Separator
     // \u2060 : Word Joiner
@@ -17,13 +17,15 @@ module.exports = grammar({
     ],
   
     rules: {
-      // Non-Terminal
+      // Non-Terminal Symbols
       Start: $ => repeat($.Prog),
 
-      Prog: $ => $.MoreThanOneStmt, // Stmt로 바로 잇는것도 고려해봐도 좋을듯.
+      Prog: $ => $.MoreThanOneStmt, // Considerations : Directly Prog -> Stmt
 
       MoreThanOneStmt: $ => $.Stmt,
 
+      // /[Ss][Tt][Ee][Pp]/ means that the spelling in brackets is case-insensitive.
+      // STEP == step
       OptStep: $ => seq(/[Ss][Tt][Ee][Pp]/, $.Expr),
 
       Stmt: $ => choice(
@@ -42,14 +44,17 @@ module.exports = grammar({
       ),
 
       OptionalElse: $ => choice(
-        /[Ee][Nn][Dd][Ii][Ff]/, // ignoreCase("EndIf") type : string => regExp / $.EndIf ... EndIf : _ => /[Ee][Nn][Dd][Ii][Ff]/ 이렇게해도 좋지 않을까
+        // ignoreCase("EndIf") type : string => regExp 
+        // Below Consideration : When expressed in a form that can be seen in AST
+        // $.EndIf ... EndIf : _ => /[Ee][Nn][Dd][Ii][Ff]/ 
+        /[Ee][Nn][Dd][Ii][Ff]/,
         seq(/[Ee][Ll][Ss][Ee]/, $.CRStmtCRs, /[Ee][Nn][Dd][Ii][Ff]/)
       ),
 
       ExprStatement: $ => choice(
         seq($.ID, "=", $.Expr),
         seq($.ID, ".", $.ID, "=", $.Expr),
-        seq($.ID, ".", $.ID, "(", optional($.Exprs), ")"), // ID.ID() Parameter X Case -> optional func
+        seq($.ID, ".", $.ID, "(", optional($.Exprs), ")"), // ID.ID() case without parameters -> optional func use
         seq($.ID, "(", ")"),
         seq($.ID, $.Idxs, "=", $.Expr)
       ),
@@ -57,11 +62,11 @@ module.exports = grammar({
       CRStmtCRs: $ => seq($.CR, repeat($.TheRest)),
 
       TheRest: $ => seq($.Stmt, $.CR),
-
-      Exprs: $ => $.MoreThanOneExpr, 
-      // 아래와 같이 하면 Exprs가 empty str과 매칭되는 케이스가 있는데, 이는 tree-sitter에서 허용 X.
-      // 따라서 위와 같이 작성해주어야 한다.
+      
       // choice(seq(), seq($.Expr, ",", $.MoreThanOneExpr)) - (X)
+      // The rule `Exprs` matches the empty string. -> Not allowed by tree-sitter
+      // Therefore, it should be written as below.
+      Exprs: $ => $.MoreThanOneExpr,
 
       MoreThanOneExpr: $ => choice(
         $.Expr,
@@ -128,7 +133,7 @@ module.exports = grammar({
         seq("[", $.Expr, "]", $.Idxs)
       ),
 
-      // Terminal
+      // Terminal Symbols
       // Identifier & String & Number & CarriageReturn & Comment
       ID: _ => /[_a-zA-Z][_a-zA-Z0-9]*/,
 
